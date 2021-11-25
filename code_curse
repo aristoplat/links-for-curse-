@@ -1,0 +1,184 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+class Node
+{
+public:
+	int Number;
+	std::vector<int> Nodes;
+
+	int DistanceToThisElement = 0;
+	int SourceElement;
+	bool WasPassed = false;
+	bool WasFinallyPassed = false;
+	int ConnectionValue = 0;
+
+	Node(int number, std::vector<int> nodes) : Number(number), Nodes(nodes) {}
+
+	friend bool operator<(const Node& n1, const Node& n2);
+
+	bool operator==(const Node& n)
+	{
+		if (Number == n.Number)
+			return true;
+		return false;
+	}
+
+	friend std::ostream& operator<<(std::ostream& stream, Node& nod);
+};
+
+std::ostream& operator<<(std::ostream& str, const Node& nod)
+{
+	str << "Number: " << nod.Number;
+	return str;
+}
+
+bool operator<(const Node& n1, const Node& n2)
+{
+	if (n1.DistanceToThisElement > n2.DistanceToThisElement)
+		return true;
+	return false;
+}
+
+template <class T>
+void PrintPriorityQueue(std::priority_queue<T> q)
+{
+	while (!q.empty())
+	{
+		std::cout << q.top() << std::endl;
+		q.pop();
+	}
+}
+
+std::vector<Node> (int index, std::vector<Node> nodes) {
+	vector<Node> d = nodes;
+	d[v] = 0;
+	for (;;) {
+		bool any = false;
+		for (int j = 0; j < m; ++j)
+			if (d[e[j].a] < INF)
+				if (d[e[j].b] > d[e[j].a] + e[j].cost) {
+					d[e[j].b] = d[e[j].a] + e[j].cost;
+					any = true;
+				}
+		if (!any)  break;
+	}
+
+	template <class T1>
+	friend istream& operator>> (istream & s, Matrix<T1>&M);
+	template <class T1>
+	friend ostream& operator<< (ostream & s, Matrix<T1> M);
+
+	istream& operator>>(istream & ustream, std::vector<T1>&obj)
+	{
+		if (typeid(ustream) == typeid(ifstream))
+		{
+			//вывод размеры
+			//s<<M.height<<" "<<M.width<<" ";
+			//вывод значений матрицы
+			int h, w;
+			ustream >> h >> w;
+			if (obj.height == h && obj.width == w)
+			{
+				for (int i = 0; i < obj.height; i++)
+					for (int j = 0; j < obj.width; j++)
+						ustream >> obj.ptr[i][j];
+			}
+			else
+			{
+				if (obj.ptr != NULL)
+				{
+					for (int i = 0; i < obj.height; i++)
+						delete[] obj.ptr[i];
+					delete[] obj.ptr;
+				}
+				obj.height = h;
+				obj.width = w;
+				obj.ptr = new T1 * [obj.height];
+				for (int i = 0; i < obj.height; i++)
+					obj.ptr[i] = new T1[obj.width];
+				for (int i = 0; i < obj.height; i++)
+					for (int j = 0; j < obj.width; j++)
+						ustream >> obj.ptr[i][j];
+			}
+		}
+		else
+		{
+			for (int i = 0; i < obj.height; i++)
+			{
+				for (int j = 0; j < obj.width; j++)
+					ustream >> obj.ptr[i][j];
+			}
+			return ustream;
+		}
+	}
+
+	template <class T1>
+	ostream& operator<< (ostream & ustream, Matrix<T1> obj)
+	{
+		if (typeid(ustream).name() == typeid(ofstream).name())
+		{
+			ustream << obj.height << " " << obj.width << "\n";
+			for (int i = 0; i < obj.height; i++)
+			{
+				for (int j = 0; j < obj.width; j++)
+					ustream << obj.ptr[i][j] << "\n";
+			}
+			return ustream;
+		}
+		for (int i = 0; i < obj.height; i++)
+		{
+			for (int j = 0; j < obj.width; j++)
+				ustream << obj.ptr[i][j] << " ";
+			ustream << "\n";
+		}
+		return ustream;
+	}
+
+int main()
+{
+	std::vector<std::vector<int>> Matrix = {
+	{ 0, 5, 3, 6, 8, 9, 7, 8, 1, 7, 0, 0, 4, 8 },
+	{ 5, 0, 0, 3, 6, 9, 6, 5, 0, 8, 0, 0, 5, 6 },
+	{ 3, 0, 0, 2, 8, 1, 3, 0, 8, 8, 5, 5, 8, 4 },
+	{ 6, 3, 2, 0, 4, 6, 6, 4, 6, 8, 8, 6, 9, 4 },
+	{ 8, 6, 8, 4, 0, 2, 8, 0, 9, 0, 8, 2, 0, 5 },
+	{ 9, 9, 1, 6, 2, 0, 8, 5, 5, 9, 8, 8, 9, 8 },
+	{ 7, 6, 3, 6, 8, 8, 0, 3, 6, 6, 8, 1, 5, 6 },
+	{ 8, 5, 0, 4, 0, 5, 3, 0, 7, 1, 4, 7, 8, 5 },
+	{ 1, 0, 8, 6, 9, 5, 6, 7, 0, 1, 2, 5, 2, 2 },
+	{ 7, 8, 8, 8, 0, 9, 6, 1, 1, 0, 6, 2, 4, 8 },
+	{ 0, 0, 5, 8, 8, 8, 8, 4, 2, 6, 0, 8, 4, 3 },
+	{ 0, 0, 5, 6, 2, 8, 1, 7, 5, 2, 8, 0, 5, 5 },
+	{ 4, 5, 8, 9, 0, 9, 5, 8, 2, 4, 4, 5, 0, 3 },
+	{ 8, 6, 4, 4, 5, 8, 6, 5, 2, 8, 3, 5, 3, 0 },
+	};
+
+	std::vector<Node> Nodes;
+	for (int i = 0; i < Matrix.size(); i++)
+		Nodes.push_back(Node(i, Matrix[i]));
+
+	std::vector<std::vector<int>> Matrix1 = {
+		{0, 6, 1, 5, 0, 0},
+		{6, 0, 5, 0, 3, 0},
+		{1, 5, 0, 5, 6, 4},
+		{5, 0, 5, 0, 0, 2},
+		{0, 3, 6, 0, 0, 0},
+		{0, 0, 4, 2, 0, 0}
+	};
+
+	std::vector<Node> Nodes1;
+	for (int i = 0; i < Matrix1.size(); i++)
+		Nodes1.push_back(Node(i, Matrix1[i]));
+
+	std::cout << "G" << std::endl;
+
+
+
+	std::cout << std::endl;
+
+	std::cout <<  std::endl;
+}
